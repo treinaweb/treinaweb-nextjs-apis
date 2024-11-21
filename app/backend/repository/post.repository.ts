@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client/extension";
+"use server"
+import { PrismaClient } from "@prisma/client";
 import { Post } from "../model/post";
 
 const db = new PrismaClient();
