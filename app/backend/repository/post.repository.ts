@@ -8,10 +8,17 @@ export async function obterTodos(): Promise<Post[]> {
     return await db.post.findMany();
 }
 
-export async function salvar(post: Post) {
+export async function salvar(post: Post): Promise<Post> {
     return await db.post.upsert({
         where: { id: post.id },
         update: post,
         create: post,
     });
+}
+
+export async function obterPorSlug(slug: string): Promise<Post> {
+    const post = await db.post.findUnique({
+        where: { slug },
+    });
+    return post as Post;
 }
