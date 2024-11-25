@@ -1,6 +1,7 @@
 "use server"
 import { PrismaClient } from "@prisma/client";
 import { Post } from "../model/post";
+import { PostUpdateDto } from "../dtos/post-update.dto";
 
 const db = new PrismaClient();
 
@@ -21,4 +22,11 @@ export async function obterPorSlug(slug: string): Promise<Post> {
         where: { slug },
     });
     return post as Post;
+}
+
+export async function update(slug: string, post: PostUpdateDto) {
+    return await db.post.update({
+        where: {slug: slug},
+        data: post,
+    })
 }
