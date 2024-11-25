@@ -35,3 +35,22 @@ export async function PATCH(req: NextRequest, { params }: { params : { slug: str
         return NextResponse.json({message: "Falha ao atualizar post", error: error}, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params : { slug: string }}) {
+    try {
+        const { slug } = await params;
+
+        const post: Post = await postRepository.obterPorSlug(slug);
+
+        if (!post) {
+            return NextResponse.json({ error: "Post não encontrado" }, { status: 404});
+        }
+
+
+        await postRepository.excluir(slug);
+        return NextResponse.json({message: "Post excluido com sucesso"}, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({message: "Falha ao excluir post", error: error}, { status: 500 })
+
+    }
+}

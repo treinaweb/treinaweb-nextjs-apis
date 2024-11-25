@@ -30,3 +30,9 @@ export async function update(slug: string, post: PostUpdateDto) {
         data: post,
     })
 }
+
+export async function excluir(slug: string): Promise<void> {
+    await db.post.delete({
+        where: { slug }
+    })
+}
